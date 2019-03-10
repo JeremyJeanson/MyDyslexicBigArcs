@@ -1,0 +1,14 @@
+.legend{
+    x:160;
+    y:192;
+}
+.legend image{
+    x:$+2;
+    y:0;
+    height: 25;
+    width: 25;
+  }
+  #arcs-container{
+      x:0;
+      y:40;
+  }

@@ -1,0 +1,191 @@
+#container{
+  fill: white;
+}
+#background {
+  width: 100%;
+  height: 100%;
+  fill: black;
+}
+#clock-container {
+  x: 100%-130;
+}
+#clock-container image {
+  x:$;
+  height: 60;
+  width: 30;
+}  
+#clock-container .clock-doublepoints{
+  width:10;
+  href:"images/doublepoints.png";
+}
+#date-container {
+  y: 70;
+}
+#date-container image{
+  x:$;
+  width: 20;
+  height: 40;
+}
+.battery-bar-container{
+  y: 100%-4;
+}
+#battery-bar-background{
+  height: 4;
+  width: 100%;
+}
+#battery-bar-value{
+  height: 4;
+  width: 100%;
+}
+
+#hrm-container{
+  x:100%-125;
+  y:100%-60;
+}
+#hrm-container #hrm-text-container{
+  x:50;
+}
+#hrm-container #iconHRM {
+  width: 50;
+  height: 50;
+  fill: #FF214A;
+}
+#hrm-container #hrm-text-container image{
+  x:$;
+  width: 25;
+  height: 50;
+}
+
+#steps-container{
+  x:0;
+  y:100%-60;
+}
+.steps-arc-container{
+  y:0;
+  height: 50;
+  width: 50;
+  fill:lightblue;
+}
+.steps-arc-container circle{
+  cx:50%;
+  cy:50%;
+  r:50%;  
+  fill: gold;
+}
+.steps-arc-container arc{
+  height: 100%;
+  width: 100%;
+  arc-width:4;
+  start-angle:0;
+}
+.steps-arc-container .arc-background{
+  x:2;
+  y:2;
+  height: 100%-4;
+  width: 100%-4;
+  arc-width:1;
+  sweepAngle:360;
+}
+.steps-arc-container image{
+  x:20%;
+  y:20%;
+  height: 60%;
+  width: 60%;
+  href:"images/stat_steps_solid_48px.png";
+}  
+.steps-text-container {
+  x:56;
+}
+.steps-text-container image{
+  x:$;
+  width: 25;
+  height: 50;
+}
+.legend image{
+  height: 25;
+  width: 25;
+}
+.legend .stats-steps-container{ 
+  href:"images/stat_steps_solid_48px.png";
+}
+.legend .stats-floors-container{ 
+  href:"images/stat_floors_solid_48px.png";
+}
+.legend .stats-cals-container{ 
+  href:"images/stat_cals_solid_48px.png";
+}
+.legend .stats-am-container{ 
+  href:"images/stat_am_solid_48px.png";
+}
+.legend .stats-dist-container{ 
+  href:"images/stat_dist_solid_48px.png";
+}
+#arcs-container{
+  width:180;
+  height:180;
+}
+#arcs-container arc{
+  height: 100%;
+  width: 100%;
+  arc-width:1;
+  sweepAngle:360;
+}
+#arcs-container .arc-background{
+  height: 100%;
+  width: 100%;
+  arc-width:10;
+  sweepAngle:360;
+  opacity: 0.5;
+}
+#arcs-container .arc-value{
+  height: 100%;
+  width: 100%;
+  arc-width:10;
+  start-angle:0;
+}
+#arcs-container .stats-steps-container{ 
+  height: 100%;
+  width: 100%;
+}
+#arcs-container .stats-floors-container{
+  height: 80%;
+  width: 80%;
+  x:10%;
+  y:10%;
+}
+#arcs-container .stats-cals-container{
+  height: 60%;
+  width: 60%;
+  x:20%;
+  y:20%;
+}
+#arcs-container .stats-am-container{
+  height: 40%;
+  width: 40%;
+  x:30%;
+  y:30%;
+}
+#arcs-container .stats-dist-container{
+  height: 20%;
+  width: 20%;
+  x:40%;
+  y:40%;
+}
+.stats-dist-container{
+  fill:blue;
+}
+.stats-steps-container{ 
+  fill:lightblue;
+}
+.stats-floors-container{
+  fill:green;
+}
+.stats-cals-container{
+  fill:orange;
+}
+.stats-am-container{
+  fill:yellow;
+}
+.stats-dist-container{
+  fill:blue;
+}
