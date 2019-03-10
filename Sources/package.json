@@ -9,7 +9,7 @@
     "fitbit-sdk-types": "^3.0.0"
   },
   "fitbit": {
-    "appUUID": "e4817611-0a54-478a-a359-f17a4ee7628d",
+    "appUUID": "3c57407a-936a-4305-9f93-00895a42ef68",
     "appType": "clockface",
     "appDisplayName": "MyDyslexicBigArcs",
     "requestedPermissions": [

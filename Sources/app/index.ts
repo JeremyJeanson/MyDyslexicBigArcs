@@ -28,6 +28,7 @@ const batteryValue = document.getElementById("battery-bar-value") as GradientRec
 const stepsContainer = document.getElementById("steps-container") as GraphicsElement;
 
 // Heart rate management
+const hrmContainer = document.getElementById("hrm-container") as GroupElement;
 const iconHRM = document.getElementById("iconHRM") as GraphicsElement;
 const imgHRM = document.getElementById("icon") as ImageElement;
 const hrmTexts = document.getElementById("hrm-text-container") .getElementsByTagName("image") as ImageElement[];
@@ -75,7 +76,7 @@ simpleMinutes.initialize("seconds", (hours, mins, date) => {
 import * as batterySimple from "./simple/power-battery";
 
 // Method to update battery level informations
-batterySimple.initialize((battery)=>{
+batterySimple.initialize((battery) => {
   let batteryString = battery.toString() + "%";
   // Battery bar
   batteryValue.width = Math.floor(battery) * device.screen.width / 100;
@@ -123,21 +124,21 @@ function UpdateActivities()
     lastStepsGoals = actualStepsGoals;
   }
 
-  UpdateStats();
+  UpdateActivitiesArcs();
 }
 
 // Update Activities informations
-function UpdateStats():void
+function UpdateActivitiesArcs():void
 {
-  RenderActivity(stats[0],goals.steps, today.local.steps);
-  RenderActivity(stats[1],goals.elevationGain, today.local.elevationGain);
-  RenderActivity(stats[2],goals.calories, today.local.calories);
-  RenderActivity(stats[3],goals.activeMinutes, today.local.activeMinutes);
-  RenderActivity(stats[4],goals.distance, today.local.distance);  
+  RenderActivityArc(stats[0],goals.steps, today.local.steps);
+  RenderActivityArc(stats[1],goals.elevationGain, today.local.elevationGain);
+  RenderActivityArc(stats[2],goals.calories, today.local.calories);
+  RenderActivityArc(stats[3],goals.activeMinutes, today.local.activeMinutes);
+  RenderActivityArc(stats[4],goals.distance, today.local.distance);  
 }
 
 // Render an activity
-function RenderActivity(container:GraphicsElement, goal:number, done:number):void
+function RenderActivityArc(container:GraphicsElement, goal:number, done:number):void
 {
   let arc = container.getElementsByTagName("arc")[1] as ArcElement;
   arc.sweepAngle = util.activityToAngle(goal,done);
@@ -148,18 +149,18 @@ function UpdateActivityWithText(container:GraphicsElement, goal:number, achieved
   let containers = container.getElementsByTagName("svg") as GraphicsElement[];
   
   // Arc
-  RenderActivityWithText(containers[0], goal, achieved);
+  RenderActivityTextArc(containers[0], goal, achieved);
   
   // Text
   // container.x = device.screen.width / 2 + 20 - (achievedString.toString().length * 20);
   let texts = containers[1].getElementsByTagName("image") as ImageElement[];
-  for (let i = 0; i < achievedString.length; i++) {
+  for (let i = 0; i < texts.length; i++) {
     texts[i].href = util.getImageFromLeft(achievedString, i);
   }
 }
 
 // Render an activity
-function RenderActivityWithText(container:GraphicsElement, goal:number, achieved:number):void {
+function RenderActivityTextArc(container:GraphicsElement, goal:number, achieved:number):void {
   let arc = container.getElementsByTagName("arc")[1] as ArcElement; // First Arc is used for background
   let circle = container.getElementsByTagName("circle")[0] as CircleElement;
   let image = container.getElementsByTagName("image")[0] as ImageElement;
@@ -182,19 +183,31 @@ function RenderActivityWithText(container:GraphicsElement, goal:number, achieved
 // Heart rate manager
 // --------------------------------------------------------------------------------
 import * as simpleHRM from "./simple/hrm";
+let lastBpm:number;
 
-function hrmCallback(data:any):void {
-  if (data.zone === "out-of-range") {
+simpleHRM.initialize((newValue, bpm, zone, restingHeartRate)=> {
+  // Zones
+  if (zone === "out-of-range") {
     imgHRM.href = "images/stat_hr_open_48px.png";
   } else {
     imgHRM.href = "images/stat_hr_solid_48px.png";
   }
-  if (data.bpm !== "--") {
+
+  // Animation
+  if(newValue){
     iconHRM.animate("highlight");
-    let bpmString = `${data.bpm}`;
-    hrmTexts[0].href = util.getImageFromLeft(bpmString, 0);
-    hrmTexts[1].href = util.getImageFromLeft(bpmString, 1);
-    hrmTexts[2].href = util.getImageFromLeft(bpmString, 2);
+  }
+
+  // BPM value display
+  if(bpm !== lastBpm) {
+    if (bpm > 0) {
+      hrmContainer.style.display="inline";
+      let bpmString = bpm.toString();
+      hrmTexts[0].href = util.getImageFromLeft(bpmString, 0);
+      hrmTexts[1].href = util.getImageFromLeft(bpmString, 1);
+      hrmTexts[2].href = util.getImageFromLeft(bpmString, 2);
+    } else {
+      hrmContainer.style.display="none";
     }
-}
-simpleHRM.initialize(hrmCallback);
+  }
+});

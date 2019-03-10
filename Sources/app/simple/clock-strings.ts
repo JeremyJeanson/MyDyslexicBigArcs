@@ -8,9 +8,9 @@ import * as util from "./utils";
 type Granularity = 'off' | 'seconds' | 'minutes' | 'hours';
 
 // Last values
-let hoursLast = "";
-let minsLast = "";
-let dateLast = "";
+let hoursLast:string;
+let minsLast:string;
+let dateLast:string;
 
 // Initialize the call back
 export function initialize(granularity:Granularity, callback: (hours:string, mins:string, date:string)=>void) : void {
