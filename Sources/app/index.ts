@@ -11,6 +11,7 @@ import { me as device } from "device";
 const container = document.getElementById("container") as GraphicsElement;
 const background = document.getElementById("background") as RectElement;
 const batteryBackground = document.getElementById("battery-bar-background") as GradientArcElement;
+const _batteryBarContainer = document.getElementById("battery-bar-container") as GraphicsElement;
 
 // Date
 const dateContainer = document.getElementById("date-container") as GraphicsElement;
@@ -34,7 +35,8 @@ const imgHRM = document.getElementById("icon") as ImageElement;
 const hrmTexts = document.getElementById("hrm-text-container") .getElementsByTagName("image") as ImageElement[];
 
 // Stats
-const stats = document.getElementById("arcs-container").getElementsByTagName("svg") as GraphicsElement[];
+const _arcsContainer = document.getElementById("arcs-container") as GraphicsElement;
+const stats = _arcsContainer.getElementsByTagName("svg") as GraphicsElement[];
 
 // --------------------------------------------------------------------------------
 // Clock
@@ -86,31 +88,69 @@ batterySimple.initialize((battery) => {
 // --------------------------------------------------------------------------------
 import * as simpleSettings from "./simple/device-settings";
 
-simpleSettings.initialize((data:any) => {
-  if (!data) {
+simpleSettings.initialize((settings:any) => {
+  if (!settings) {
     return;
   }
 
-  if (data.colorBackground) {
-    background.style.fill = data.colorBackground;
-    batteryBackground.gradient.colors.c2 = data.colorBackground;
+  if (settings.colorBackground) {
+    background.style.fill = settings.colorBackground;
+    batteryBackground.gradient.colors.c2 = settings.colorBackground;
     UpdateActivities(); // For achivement color
   }
 
-  if (data.colorForeground) {
-    container.style.fill = data.colorForeground;
+  if (settings.colorForeground) {
+    container.style.fill = settings.colorForeground;
+  }
+
+  if (settings.showBatteryBar !== undefined) {
+    _batteryBarContainer.style.display = settings.showBatteryBar === true
+      ? "inline"
+      : "none";
   }
 });
 // --------------------------------------------------------------------------------
 // Activity
 // --------------------------------------------------------------------------------
 import { goals,today } from "user-activity";
+import { me as appbit } from "appbit";
+
+// Detect limitations of versa light
+const _elevationIsAvailablle = appbit.permissions.granted("access_activity")
+  && today.local.elevationGain !== undefined;
+
 let lastStepsGoals=-1;
 let lastSteps=-1;
 
+// When goals are reached
 goals.onreachgoal = (evt)=>{
   UpdateActivities();
 };
+
+// Update Style when elevation isnot available
+if(!_elevationIsAvailablle){
+  // Hide the elevation informations
+  stats[1].style.display = "none";
+
+  // Move arc uper
+  _arcsContainer.y = 10;  
+
+  // Resize the first item
+  stats[0].height = 180 * 0.8;
+  stats[0].width = 180 * 0.8;
+  stats[0].x = 18;
+  stats[0].y = 18;
+
+  // Move legend
+  const legend = document.getElementById("legend") as GraphicsElement;
+  legend.x = 34;
+  legend.y = 180;
+  legend.getElementsByTagName("image")[1].style.display = "none";
+
+  // Move clock 
+  (document.getElementById("clock-container") as GraphicsElement).y = 30;
+  (document.getElementById("date-container") as GraphicsElement).y = 100;
+}
 
 // Update Activities informations
 function UpdateActivities()

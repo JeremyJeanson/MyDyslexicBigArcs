@@ -1,6 +1,6 @@
 <svg id="container">
   <rect id="background" /> 
-  <svg class="battery-bar-container">
+  <svg id="battery-bar-container">
     <gradientRect id="battery-bar-background"
       gradient-type="linear"
       gradient-x1="0" gradient-y1="100%-10"
@@ -31,7 +31,7 @@
     <image />
     <image />
   </svg>
-  <svg class="legend">
+  <svg id="legend">
     <image class="stats-steps-container"/>
     <image class="stats-floors-container"/>
     <image class="stats-cals-container"/>

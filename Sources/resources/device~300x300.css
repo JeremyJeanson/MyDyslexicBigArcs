@@ -1,8 +1,8 @@
-.legend{
-    x:160;
-    y:192;
+#legend{
+    x:20;
+    y:10;
 }
-.legend image{
+#legend image{
     x:$+2;
     y:0;
     height: 25;
@@ -12,3 +12,6 @@
       x:0;
       y:40;
   }
+#hrm-container{
+    y:170;
+}
