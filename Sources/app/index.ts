@@ -23,20 +23,21 @@ const cloks = document.getElementById("clock-container").getElementsByTagName("i
 // Battery
 const batteryValue = document.getElementById("battery-bar-value") as GradientRectElement;
 
-// Stats
-// const arcSteps = document.getElementById("arc-steps") as ArcElement;
-// const stepsAchivement = document.getElementById("steps-achivement-container") as GraphicsElement;
-const stepsContainer = document.getElementById("steps-container") as GraphicsElement;
-
 // Heart rate management
 const hrmContainer = document.getElementById("hrm-container") as GroupElement;
 const iconHRM = document.getElementById("iconHRM") as GraphicsElement;
 const imgHRM = document.getElementById("icon") as ImageElement;
-const hrmTexts = document.getElementById("hrm-text-container") .getElementsByTagName("image") as ImageElement[];
+const hrmTexts = document.getElementById("hrm-text-container").getElementsByTagName("image") as ImageElement[];
 
 // Stats
 const _arcsContainer = document.getElementById("arcs-container") as GraphicsElement;
 const stats = _arcsContainer.getElementsByTagName("svg") as GraphicsElement[];
+
+// Stats
+const _stepsContainer = document.getElementById("steps-container") as GraphicsElement;
+const _calsContainer = document.getElementById("cals-container") as GraphicsElement;
+const _amContainer = document.getElementById("am-container") as GraphicsElement;
+const _distContainer = document.getElementById("dist-container") as GraphicsElement;
 
 // --------------------------------------------------------------------------------
 // Clock
@@ -47,29 +48,29 @@ simpleMinutes.initialize("seconds", (hours, mins, date) => {
   // mins="38";
   // date = "17 jan";
   // Hours
-  if(hours) {
-    cloks[0].href = util.getImageFromLeft(hours,0);
-    cloks[1].href = util.getImageFromLeft(hours,1);
+  if (hours) {
+    cloks[0].href = util.getImageFromLeft(hours, 0);
+    cloks[1].href = util.getImageFromLeft(hours, 1);
   }
 
   // Minutes
-  if(mins) {    
-    cloks[3].href = util.getImageFromLeft(mins,0);
-    cloks[4].href = util.getImageFromLeft(mins,1);  
+  if (mins) {
+    cloks[3].href = util.getImageFromLeft(mins, 0);
+    cloks[4].href = util.getImageFromLeft(mins, 1);
   }
 
   // Date
-  if(date) {
+  if (date) {
     // Position
     dateContainer.x = (device.screen.width) - (date.length * 20);
     // Values
-    for(let i=0; i<dates.length; i++){
+    for (let i = 0; i < dates.length; i++) {
       dates[i].href = util.getImageFromLeft(date, i);
     }
   }
 
-    // update od stats
-    UpdateActivities();
+  // update od stats
+  UpdateActivities();
 });
 
 // --------------------------------------------------------------------------------
@@ -88,7 +89,7 @@ batterySimple.initialize((battery) => {
 // --------------------------------------------------------------------------------
 import * as simpleSettings from "./simple/device-settings";
 
-simpleSettings.initialize((settings:any) => {
+simpleSettings.initialize((settings: any) => {
   if (!settings) {
     return;
   }
@@ -112,28 +113,15 @@ simpleSettings.initialize((settings:any) => {
 // --------------------------------------------------------------------------------
 // Activity
 // --------------------------------------------------------------------------------
-import { goals,today } from "user-activity";
-import { me as appbit } from "appbit";
-
-// Detect limitations of versa light
-const _elevationIsAvailablle = appbit.permissions.granted("access_activity")
-  && today.local.elevationGain !== undefined;
-
-let lastStepsGoals=-1;
-let lastSteps=-1;
-
-// When goals are reached
-goals.onreachgoal = (evt)=>{
-  UpdateActivities();
-};
+import * as simpleActivities from "./simple/activities";
 
 // Update Style when elevation isnot available
-if(!_elevationIsAvailablle){
+if (!simpleActivities.elevationIsAvailable()) {
   // Hide the elevation informations
   stats[1].style.display = "none";
 
   // Move arc uper
-  _arcsContainer.y = 10;  
+  _arcsContainer.y = 10;
 
   // Resize the first item
   stats[0].height = 180 * 0.8;
@@ -152,80 +140,58 @@ if(!_elevationIsAvailablle){
   (document.getElementById("date-container") as GraphicsElement).y = 100;
 }
 
+simpleActivities.initialize(UpdateActivities);
+
 // Update Activities informations
-function UpdateActivities()
-{
-  let actualStepsGoals = goals.steps||0;
-  let actualSteps = today.local.steps||0;
-  if(actualSteps != lastSteps
-    || actualStepsGoals != lastStepsGoals){
-    UpdateActivityWithText(stepsContainer, actualStepsGoals, actualSteps);
-    lastSteps = actualSteps;
-    lastStepsGoals = actualStepsGoals;
+function UpdateActivities() {
+  const activities = simpleActivities.getNewValues();
+
+  if (activities.steps !== undefined) {
+    renderActivityArc(stats[0], activities.steps);
+    UpdateActivityWithText(_stepsContainer, activities.steps);
   }
-
-  UpdateActivitiesArcs();
-}
-
-// Update Activities informations
-function UpdateActivitiesArcs():void
-{
-  RenderActivityArc(stats[0],goals.steps, today.local.steps);
-  RenderActivityArc(stats[1],goals.elevationGain, today.local.elevationGain);
-  RenderActivityArc(stats[2],goals.calories, today.local.calories);
-  RenderActivityArc(stats[3],goals.activeMinutes, today.local.activeMinutes);
-  RenderActivityArc(stats[4],goals.distance, today.local.distance);  
+  if (activities.elevationGain !== undefined) {
+    renderActivityArc(stats[1], activities.elevationGain);
+  }
+  if (activities.calories !== undefined) {
+    renderActivityArc(stats[2], activities.calories);
+    UpdateActivityWithText(_calsContainer, activities.calories);
+  }
+  if (activities.activeMinutes !== undefined) {
+    renderActivityArc(stats[3], activities.activeMinutes);
+    UpdateActivityWithText(_amContainer, activities.activeMinutes);
+  }
+  if (activities.distance !== undefined) {
+    renderActivityArc(stats[4], activities.distance);
+    UpdateActivityWithText(_distContainer, activities.distance);
+  }
 }
 
 // Render an activity
-function RenderActivityArc(container:GraphicsElement, goal:number, done:number):void
-{
+function renderActivityArc(container: GraphicsElement, activity: simpleActivities.Activity): void {
   let arc = container.getElementsByTagName("arc")[1] as ArcElement;
-  arc.sweepAngle = util.activityToAngle(goal,done);
+  arc.sweepAngle = util.activityToAngle(activity.goal, activity.actual);
 }
 
-function UpdateActivityWithText(container:GraphicsElement, goal:number, achieved:number) : void { 
-  let achievedString = achieved.toString();
+function UpdateActivityWithText(container: GraphicsElement, activity:simpleActivities.Activity): void {
+  let achievedString = activity.actual.toString();
   let containers = container.getElementsByTagName("svg") as GraphicsElement[];
-  
+
   // Arc
-  RenderActivityTextArc(containers[0], goal, achieved);
-  
+  simpleActivities.updateActivityArc(containers[0], activity,background.style.fill);
+
   // Text
   // container.x = device.screen.width / 2 + 20 - (achievedString.toString().length * 20);
   let texts = containers[1].getElementsByTagName("image") as ImageElement[];
-  for (let i = 0; i < texts.length; i++) {
-    texts[i].href = util.getImageFromLeft(achievedString, i);
-  }
-}
-
-// Render an activity
-function RenderActivityTextArc(container:GraphicsElement, goal:number, achieved:number):void {
-  let arc = container.getElementsByTagName("arc")[1] as ArcElement; // First Arc is used for background
-  let circle = container.getElementsByTagName("circle")[0] as CircleElement;
-  let image = container.getElementsByTagName("image")[0] as ImageElement;
-
-  // Goals ok
-  if(achieved >= goal){
-    circle.style.display = "inline";
-    arc.style.display= "none";
-    image.style.fill = background.style.fill;
-  }
-  else{
-    circle.style.display = "none";
-    arc.style.display= "inline";
-    arc.sweepAngle = util.activityToAngle(goal, achieved);
-    if(container.style.fill)
-      image.style.fill = container.style.fill;
-  }
+  util.display(achievedString,texts);
 }
 // --------------------------------------------------------------------------------
 // Heart rate manager
 // --------------------------------------------------------------------------------
 import * as simpleHRM from "./simple/hrm";
-let lastBpm:number;
+let lastBpm: number;
 
-simpleHRM.initialize((newValue, bpm, zone, restingHeartRate)=> {
+simpleHRM.initialize((newValue, bpm, zone, restingHeartRate) => {
   // Zones
   if (zone === "out-of-range") {
     imgHRM.href = "images/stat_hr_open_48px.png";
@@ -234,20 +200,20 @@ simpleHRM.initialize((newValue, bpm, zone, restingHeartRate)=> {
   }
 
   // Animation
-  if(newValue){
+  if (newValue) {
     iconHRM.animate("highlight");
   }
 
   // BPM value display
-  if(bpm !== lastBpm) {
+  if (bpm !== lastBpm) {
     if (bpm > 0) {
-      hrmContainer.style.display="inline";
+      hrmContainer.style.display = "inline";
       let bpmString = bpm.toString();
       hrmTexts[0].href = util.getImageFromLeft(bpmString, 0);
       hrmTexts[1].href = util.getImageFromLeft(bpmString, 1);
       hrmTexts[2].href = util.getImageFromLeft(bpmString, 2);
     } else {
-      hrmContainer.style.display="none";
+      hrmContainer.style.display = "none";
     }
   }
 });

@@ -55,52 +55,6 @@
   width: 25;
   height: 50;
 }
-
-#steps-container{
-  x:0;
-  y:100%-60;
-}
-.steps-arc-container{
-  y:0;
-  height: 50;
-  width: 50;
-  fill:lightblue;
-}
-.steps-arc-container circle{
-  cx:50%;
-  cy:50%;
-  r:50%;  
-  fill: gold;
-}
-.steps-arc-container arc{
-  height: 100%;
-  width: 100%;
-  arc-width:4;
-  start-angle:0;
-}
-.steps-arc-container .arc-background{
-  x:2;
-  y:2;
-  height: 100%-4;
-  width: 100%-4;
-  arc-width:1;
-  sweepAngle:360;
-}
-.steps-arc-container image{
-  x:20%;
-  y:20%;
-  height: 60%;
-  width: 60%;
-  href:"images/stat_steps_solid_48px.png";
-}  
-.steps-text-container {
-  x:56;
-}
-.steps-text-container image{
-  x:$;
-  width: 25;
-  height: 50;
-}
 #legend image{
   height: 25;
   width: 25;
@@ -188,4 +142,73 @@
 }
 .stats-dist-container{
   fill:blue;
+}
+#stats-container{
+  x:0;
+  y:100%-60;
+}
+.stats-arc-container{
+  y:0;
+  height: 50;
+  width: 50;
+}
+.stats-arc-container circle{
+  cx:50%;
+  cy:50%;
+  r:50%;  
+  fill: gold;
+}
+.stats-arc-container arc{
+  height: 100%;
+  width: 100%;
+  arc-width:4;
+  start-angle:0;
+}
+.stats-arc-container .arc-background{
+  x:2;
+  y:2;
+  height: 46;
+  width: 46;
+  arc-width:1;
+  sweepAngle:360;
+}
+.stats-arc-container image{
+  x:20%;
+  y:20%;
+  height: 60%;
+  width: 60%;
+}  
+.stats-text-container {
+  x:56;
+}
+.stats-text-container image{
+  x:$;
+  width: 25;
+  height: 50;
+}
+
+#steps-container .stats-arc-container{
+  fill:lightblue;
+}
+#steps-container .stats-arc-container image{
+  href:"images/stat_steps_solid_48px.png";
+}
+
+#cals-container .stats-arc-container{
+  fill:orange;
+}
+#cals-container .stats-arc-container image{
+  href:"images/stat_cals_solid_48px.png";
+}
+#am-container .stats-arc-container{
+  fill:yellow;
+}
+#am-container .stats-arc-container image{
+  href:"images/stat_am_solid_48px.png";
+}
+#dist-container .stats-arc-container{
+  fill:blue;
+}
+#dist-container .stats-arc-container image{
+  href:"images/stat_dist_solid_48px.png";
 }
