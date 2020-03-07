@@ -14,8 +14,10 @@ const batteryBackground = document.getElementById("battery-bar-background") as G
 const _batteryBarContainer = document.getElementById("battery-bar-container") as GraphicsElement;
 
 // Date
-const dateContainer = document.getElementById("date-container") as GraphicsElement;
-const dates = dateContainer.getElementsByTagName("image") as ImageElement[];
+const dates1Container = document.getElementById("date1-container") as GraphicsElement;
+const dates1 = dates1Container.getElementsByTagName("image") as ImageElement[];
+const dates2Container = document.getElementById("date2-container") as GraphicsElement;
+const dates2 = dates2Container.getElementsByTagName("image") as ImageElement[];
 
 // Hours
 const cloks = document.getElementById("clock-container").getElementsByTagName("image") as ImageElement[];
@@ -43,32 +45,37 @@ const _distContainer = document.getElementById("dist-container") as GraphicsElem
 // Clock
 // --------------------------------------------------------------------------------
 // Update the clock every seconds
-simpleMinutes.initialize("seconds", (hours, mins, date) => {
+simpleMinutes.initialize("seconds", (clock) => {
   // hours="21";
   // mins="38";
   // date = "17 jan";
   // Hours
-  if (hours) {
-    cloks[0].href = util.getImageFromLeft(hours, 0);
-    cloks[1].href = util.getImageFromLeft(hours, 1);
+  if (clock.Hours) {
+    cloks[0].href = util.getImageFromLeft(clock.Hours, 0);
+    cloks[1].href = util.getImageFromLeft(clock.Hours, 1);
   }
 
   // Minutes
-  if (mins) {
-    cloks[3].href = util.getImageFromLeft(mins, 0);
-    cloks[4].href = util.getImageFromLeft(mins, 1);
+  if (clock.Minutes) {
+    cloks[3].href = util.getImageFromLeft(clock.Minutes, 0);
+    cloks[4].href = util.getImageFromLeft(clock.Minutes, 1);
   }
 
-  // Date
-  if (date) {
+  // Date 1
+  if (clock.Date1 !== undefined) {
     // Position
-    dateContainer.x = (device.screen.width) - (date.length * 20);
+    dates1Container.x = (device.screen.width) - (clock.Date1.length * 20);
     // Values
-    for (let i = 0; i < dates.length; i++) {
-      dates[i].href = util.getImageFromLeft(date, i);
-    }
+    util.display(clock.Date1, dates1);
   }
 
+  // Date 2
+  if (clock.Date2 !== undefined) {
+    // Position
+    dates2Container.x = (device.screen.width) - (clock.Date2.length * 20);
+    // Values
+    util.display(clock.Date2, dates2);
+  }
   // update od stats
   UpdateActivities();
 });
@@ -108,6 +115,11 @@ simpleSettings.initialize((settings: any) => {
     _batteryBarContainer.style.display = settings.showBatteryBar === true
       ? "inline"
       : "none";
+  }
+
+  // Display based on 12H or 24H format
+  if (settings.clockDisplay24 !== undefined) {
+    simpleMinutes.updateClockDisplay24(settings.clockDisplay24 as boolean);
   }
 });
 // --------------------------------------------------------------------------------
@@ -173,17 +185,17 @@ function renderActivityArc(container: GraphicsElement, activity: simpleActivitie
   arc.sweepAngle = util.activityToAngle(activity.goal, activity.actual);
 }
 
-function UpdateActivityWithText(container: GraphicsElement, activity:simpleActivities.Activity): void {
+function UpdateActivityWithText(container: GraphicsElement, activity: simpleActivities.Activity): void {
   let achievedString = activity.actual.toString();
   let containers = container.getElementsByTagName("svg") as GraphicsElement[];
 
   // Arc
-  simpleActivities.updateActivityArc(containers[0], activity,background.style.fill);
+  simpleActivities.updateActivityArc(containers[0], activity, background.style.fill);
 
   // Text
   // container.x = device.screen.width / 2 + 20 - (achievedString.toString().length * 20);
   let texts = containers[1].getElementsByTagName("image") as ImageElement[];
-  util.display(achievedString,texts);
+  util.display(achievedString, texts);
 }
 // --------------------------------------------------------------------------------
 // Heart rate manager

@@ -20,6 +20,7 @@
 }
 #date-container {
   y: 70;
+  height: 40;
 }
 #date-container image{
   x:$;
@@ -129,16 +130,16 @@
   fill:blue;
 }
 .stats-steps-container{ 
-  fill:lightblue;
+  fill:#FF0000;
 }
 .stats-floors-container{
-  fill:green;
+  fill:#FF0080;
 }
 .stats-cals-container{
-  fill:orange;
+  fill:#FF8000;
 }
 .stats-am-container{
-  fill:yellow;
+  fill:green;
 }
 .stats-dist-container{
   fill:blue;

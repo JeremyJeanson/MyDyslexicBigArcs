@@ -32,6 +32,10 @@ function getImage(str:string) : string{
     case "%": 
       str = "pourcent";
       break;
+    case ".": 
+    case ",": 
+      str = "dot";
+      break;
   }       
   return `images/${str}.png`;
 }
@@ -42,7 +46,7 @@ export function display(text: string, controls: ImageElement[]) {
   }
 }
 
-export function activityToAngle(activityGoal:number, activityToday:number) : number
+export function activityToAngle(activityGoal:number, activityToday:number):number
 {
   if(activityGoal<=0) {
     return 0;
