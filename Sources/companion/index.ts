@@ -1,6 +1,5 @@
-import * as simpleSettings from "./simple/companion-settings";
+import * as simpleSettings from "simple-fitbit-settings/companion";
+import { Settings } from "../common"
 
-simpleSettings.initialize();
-
-simpleSettings.setDefaultSetting("clockDisplay24", true);
-simpleSettings.setDefaultSetting("showBatteryBar", true);
+// init settings wiht default values
+simpleSettings.initialize(new Settings());

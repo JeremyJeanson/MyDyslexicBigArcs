@@ -63,41 +63,38 @@
       </svg>  
     </use>
   </use>
+  <svg id="ampm-container">
+    <image />
+    <image />
+  </svg>
   <svg id="legend">
-    <image class="stats-steps-container"/>
-    <image class="stats-floors-container"/>
-    <image class="stats-cals-container"/>
-    <image class="stats-am-container"/>
-    <image class="stats-dist-container"/>
+    <image class="steps"/>
+    <image class="calories"/>
+    <image class="activesminutes"/>
+    <image class="distance"/>
+    <image class="elevation" id="elevation-legend"/>
   </svg>
   <svg id="arcs-container">
-    <svg class="stats-steps-container">
+    <svg class="arc0">
       <arc class="arc-background"/>
       <arc class="arc-value"/>
     </svg>
-    <svg class="stats-floors-container">
+    <svg class="arc1">
       <arc class="arc-background"/>
       <arc class="arc-value"/>
     </svg>
-    <svg class="stats-cals-container">
+    <svg class="arc2">
       <arc class="arc-background"/>
       <arc class="arc-value"/>
     </svg>
-    <svg class="stats-am-container">
+    <svg class="arc3">
       <arc class="arc-background"/>
       <arc class="arc-value"/>
     </svg>
-    <svg class="stats-dist-container">
+    <svg class="arc4">
       <arc class="arc-background"/>
       <arc class="arc-value"/>
     </svg>
-  </svg>
-  <svg id="battery-container">
-    <image class="battery-image" />
-    <image x="28"/>
-    <image />
-    <image />
-    <image />
   </svg>
   <svg id="hrm-container">
     <use id="iconHRM" href="#heart-beat" />
@@ -109,11 +106,11 @@
   </svg>
   <use id="stats-container" href="#cycleview">
     <use href="#cycleview-item" id="steps-container">
-        <svg class="stats-arc-container">
+        <svg class="stats-arc-container steps">
           <arc class="arc-background"/>
           <circle/>
           <arc/>
-          <image/>
+          <image class="steps"/>
         </svg>
         <svg class="stats-text-container">
             <image />
@@ -131,11 +128,11 @@
         </svg>
     </use>
     <use href="#cycleview-item" id="cals-container">
-        <svg class="stats-arc-container">
+        <svg class="stats-arc-container calories">
           <arc class="arc-background"/>
           <circle/>
           <arc/>
-          <image/>
+          <image class="calories"/>
         </svg>
         <svg class="stats-text-container">
             <image />
@@ -151,11 +148,11 @@
         </svg>
     </use>
     <use href="#cycleview-item" id="am-container">
-        <svg class="stats-arc-container">
+        <svg class="stats-arc-container activesminutes">
           <arc class="arc-background"/>
           <circle/>
           <arc/>
-          <image/>
+          <image class="activesminutes"/>
         </svg>
         <svg class="stats-text-container">
             <image />
@@ -171,11 +168,11 @@
         </svg>
     </use>
     <use href="#cycleview-item" id="dist-container">
-        <svg class="stats-arc-container">
+        <svg class="stats-arc-container distance">
           <arc class="arc-background"/>
           <circle/>
           <arc/>
-          <image/>
+          <image class="distance"/>
         </svg>
         <svg class="stats-text-container">
             <image />
