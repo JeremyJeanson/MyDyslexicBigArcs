@@ -1,0 +1,166 @@
+#container{
+  fill: white;
+}
+#background {
+  width: 100%;
+  height: 100%;
+  fill: black;
+}
+#clock-container {
+  x: 100%-130;
+}
+#clock-container image {
+  x:$;
+  height: 60;
+  width: 30;
+}  
+#clock-container .clock-doublepoints{
+  width:10;
+  href:"chars/58.png";
+}
+#date-container {
+  y: 70;
+  height: 40;
+}
+#date-container image{
+  x:$;
+  width: 20;
+  height: 40;
+}
+#ampm-container{
+  x:100%-50;
+  y:$+5;
+}
+#ampm-container image{
+  x:$;
+  width: 20;
+  height: 40;
+}
+#battery-bar-container{
+  y: 100%-10;
+  height: 10;
+}
+#battery-bar-background{
+  height: 100%;
+  width: 100%;
+}
+#battery-bar-value{
+  height: 100%;
+  width: 100%;
+}
+
+#hrm-container{
+  x:100%-125;
+  y:100%-60;
+}
+#hrm-container #hrm-text-container{
+  x:50;
+}
+#hrm-container #iconHRM {
+  width: 50;
+  height: 50;
+  fill: #FF214A;
+}
+#hrm-container #hrm-text-container image{
+  x:$;
+  width: 25;
+  height: 50;
+}
+#legend image{
+  height: 25;
+  width: 25;
+}
+#arcs-container{
+  width:180;
+  height:180;
+}
+#arcs-container arc{
+  height: 100%;
+  width: 100%;
+  arc-width:1;
+  sweepAngle:360;
+}
+#arcs-container .arc-background{
+  height: 100%;
+  width: 100%;
+  arc-width:10;
+  sweepAngle:360;
+  opacity: 0.3;
+}
+#arcs-container .arc-value{
+  height: 100%;
+  width: 100%;
+  arc-width:10;
+  start-angle:0;
+}
+#arcs-container .arc0{ 
+  height: 100%;
+  width: 100%;
+}
+#arcs-container .arc1{
+  height: 80%;
+  width: 80%;
+  x:10%;
+  y:10%;
+}
+#arcs-container .arc2{
+  height: 60%;
+  width: 60%;
+  x:20%;
+  y:20%;
+}
+#arcs-container .arc3{
+  height: 40%;
+  width: 40%;
+  x:30%;
+  y:30%;
+}
+#arcs-container .arc4{
+  height: 20%;
+  width: 20%;
+  x:40%;
+  y:40%;
+}
+#stats-container{
+  x:0;
+  y:100%-60;
+}
+.stats-arc-container{
+  y:0;
+  height: 50;
+  width: 50;
+}
+.stats-arc-container circle{
+  cx:50%;
+  cy:50%;
+  r:50%;  
+  fill: gold;
+}
+.stats-arc-container arc{
+  height: 100%;
+  width: 100%;
+  arc-width:4;
+  start-angle:0;
+}
+.stats-arc-container .arc-background{
+  x:2;
+  y:2;
+  height: 46;
+  width: 46;
+  arc-width:1;
+  sweepAngle:360;
+}
+.stats-arc-container image{
+  x:20%;
+  y:20%;
+  height: 60%;
+  width: 60%;
+}  
+.stats-text-container {
+  x:56;
+}
+.stats-text-container image{
+  x:$;
+  width: 25;
+  height: 50;
+}

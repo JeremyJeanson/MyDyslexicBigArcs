@@ -1,0 +1,42 @@
+#legend{
+    x:24;
+    y:32;
+}
+#legend image{
+    x:$+2;
+    y:0;
+    height: 25;
+    width: 25;
+  }
+#arcs-container{
+    x:4;
+    y:70;
+}
+#stats-container{
+    x:26;
+    y:100%-74;
+  }
+
+/* rigt */
+#ampm-container{
+    x:100%-90;
+    y:12;
+  }
+#clock-container {
+    x: 100%-146;
+    y:50;
+}
+#date-container{
+    x:0;
+    y:130;
+}
+#hrm-container{
+    x:100%-146;
+    y:190;
+}
+#battery-bar-container{
+    x:60;
+    width: 100%-120;
+    y: 100%-10;
+    height: 10;
+  }
